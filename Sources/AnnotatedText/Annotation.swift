@@ -1,8 +1,8 @@
 import Foundation
 import Textino
 
-public protocol Annotation {
-  var value: String { get }
+public struct Annotation: Hashable {
+  let value: String
 }
 
 extension Annotation {
@@ -28,3 +28,5 @@ extension Annotation {
     }
   }
 }
+
+

@@ -1,9 +1,6 @@
 import Foundation
 
-public struct Bold: Annotation {
-  public let value = "b"
-}
-
-public struct Italic: Annotation {
-  public let value = "i"
+public extension Annotation {
+  static let bold = Annotation(value: "b")
+  static let italic = Annotation(value: "i")
 }

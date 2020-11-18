@@ -5,8 +5,8 @@ public func parseFlatHTML(_ string: String) -> [AnnotatedText]? {
   tinyFlatHTMLParser.run(string).match
 }
 
-let tinyFlatHTMLParser = Parser.oneOf([Bold().text,
-                         Italic().text,
+let tinyFlatHTMLParser = Parser.oneOf([Annotation.bold.text,
+                                       Annotation.italic.text,
                          plainText])
   .oneOrMore()
 

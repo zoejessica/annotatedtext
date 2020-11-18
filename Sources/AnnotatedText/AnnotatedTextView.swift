@@ -7,6 +7,13 @@ public protocol TextModifierProviding {
   var modifier: TextModifier { get }
 }
 
+public func textModifier<A>(_ modifier: @escaping (Text) -> (A) -> Text,
+                     _ configuration: A) -> TextModifier {
+  { text in
+    { modifier(text)(configuration) }
+  }
+}
+
 public func styledText(from annotatedTexts: [AnnotatedText]) -> Text {
   annotatedTexts.reduce(Text(""), { initial, result in
     if let annotation = result.annotation as? TextModifierProviding {
@@ -21,4 +28,54 @@ public func styledText(from string: String) -> Text? {
   guard let annotated = parseFlatHTML(string) else { return nil }
   return styledText(from: annotated)
 }
+
+public struct StyledText: View {
+  public struct Configuration {
+    public init(_ modifiers: [Annotation : TextModifier]) {
+      self.modifiers = modifiers
+    }
+    
+    let modifiers: [Annotation : TextModifier]
+    
+    public static var standard: Configuration {
+      Configuration([Annotation.bold : Text.bold,
+                     Annotation.italic: Text.italic])
+    }
+  }
+  
+  public init(_ simpleHTML: String, configuration: Configuration = Configuration.standard) {
+    self.text = simpleHTML
+    self.configuration = configuration
+    self.annotatedText = parseFlatHTML(simpleHTML)
+  }
+  
+  let configuration: Configuration
+  let text: String
+  let annotatedText: [AnnotatedText]?
+  var modifiedText: [(text: String, modifier: TextModifier?)]? {
+    annotatedText?.map { data in
+      if let annotation = data.annotation,
+         let modifier = configuration.modifiers[annotation] {
+        return (data.text, modifier)
+      } else {
+        return (data.text, nil)
+      }
+    }
+  }
+  
+  public var body: some View {
+    if let modifiedText = modifiedText {
+      return modifiedText.reduce(Text(""), { initial, result in
+        if let modifier = result.modifier {
+          return initial + modifier(Text(result.text))()
+        } else {
+          return initial + Text(result.text)
+        }
+      })
+    } else {
+      return Text(text)
+    }
+  }
+}
+
 

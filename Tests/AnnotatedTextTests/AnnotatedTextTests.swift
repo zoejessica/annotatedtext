@@ -11,20 +11,20 @@ final class AnnotatedTextTests: XCTestCase {
     XCTAssertEqual(restA, "")
     XCTAssertEqual(matchA, [
                     AnnotatedText(text: "See what ", annotation: nil),
-                    AnnotatedText(text: "zoejessica", annotation: Bold()),
+                    AnnotatedText(text: "zoejessica", annotation: .bold),
       AnnotatedText(text: " is saying about your Minecraft Dungeons clip \"ch-ching\"! 👀", annotation: nil)])
     
     let (matchB, restB) = tinyFlatHTMLParser.run(inputB)
     XCTAssertEqual(restB, "")
     XCTAssertEqual(matchB, [
-                    AnnotatedText(text: "GoldEagle, DragonWolf", annotation: Bold()),
+                    AnnotatedText(text: "GoldEagle, DragonWolf", annotation: .bold),
                     AnnotatedText(text: " and others just published 20 new clips. 👀", annotation: nil)])
     
     let (matchC, restC) = tinyFlatHTMLParser.run(inputC)
     XCTAssertEqual(restC, "")
     XCTAssertEqual(matchC, [
                     AnnotatedText(text: "On 🔥! ", annotation: nil),
-                    AnnotatedText(text: "StelseyLesser and Thornex", annotation: Bold()),
+                    AnnotatedText(text: "StelseyLesser and Thornex", annotation: .bold),
                     AnnotatedText(text: " and -1 others started following you.", annotation: nil)])
   }
 
