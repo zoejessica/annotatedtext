@@ -1,8 +1,9 @@
 import Foundation
 import Textino
+import HTMLString
 
 public func parseFlatHTML(_ string: String) -> [AnnotatedText]? {
-  tinyFlatHTMLParser.run(string).match
+  return tinyFlatHTMLParser.run(string.removingHTMLEntities()).match
 }
 
 let tinyFlatHTMLParser = Parser.oneOf([Annotation.bold.text,
