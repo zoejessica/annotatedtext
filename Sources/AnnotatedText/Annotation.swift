@@ -2,7 +2,11 @@ import Foundation
 import Textino
 
 public struct Annotation: Hashable {
-  let value: String
+  public init(value: String) {
+    self.value = value
+  }
+  
+  public let value: String
 }
 
 extension Annotation {

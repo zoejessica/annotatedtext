@@ -31,22 +31,26 @@ public func styledText(from string: String) -> Text? {
 
 public struct StyledText: View {
   public struct Configuration {
-    public init(_ modifiers: [Annotation : TextModifier]) {
+    public init(_ modifiers: [Annotation : TextModifier],
+                parser: @escaping (String) -> [AnnotatedText]? = parseFlatHTML) {
       self.modifiers = modifiers
+      self.parser = parser
     }
     
     let modifiers: [Annotation : TextModifier]
+    let parser: (String) -> [AnnotatedText]?
     
     public static var standard: Configuration {
       Configuration([Annotation.bold : Text.bold,
-                     Annotation.italic: Text.italic])
+                     Annotation.italic: Text.italic],
+                    parser: parseFlatHTML)
     }
   }
   
   public init(_ simpleHTML: String, configuration: Configuration = Configuration.standard) {
     self.text = simpleHTML
     self.configuration = configuration
-    self.annotatedText = parseFlatHTML(simpleHTML)
+    self.annotatedText = configuration.parser(simpleHTML)
   }
   
   let configuration: Configuration
