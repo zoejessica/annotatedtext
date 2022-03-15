@@ -12,7 +12,7 @@
       },
       {
         "package": "Textino",
-        "repositoryURL": "git@github.com:zoejessica/Textino.git",
+        "repositoryURL": "https://github.com/zoejessica/Textino",
         "state": {
           "branch": "main",
           "revision": "df9cc7e97a9b91fd11a8bebcfb15c2b636b230a8",

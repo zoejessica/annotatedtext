@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-      .package(url: "git@github.com:zoejessica/Textino.git", .branch("main")),
+      .package(url: "https://github.com/zoejessica/Textino", .branch("main")),
       .package(url: "https://github.com/alexaubry/HTMLString", from: "6.0.0")
     ],
     targets: [
